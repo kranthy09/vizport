@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l /home/kranthi/Projects/vizport/docs/implementation/*.md)"
+    ]
+  }
+}
