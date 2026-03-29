@@ -4,6 +4,7 @@ const SUPPORTED_EXTENSIONS = {
   image: ['.png', '.svg', '.jpg', '.jpeg', '.gif', '.webp'],
   mermaid: ['.mmd'],
   markdown: ['.md'],
+  excalidraw: ['.excalidraw'],
 };
 
 export function getFileType(path: string): FileType {
@@ -17,6 +18,9 @@ export function getFileType(path: string): FileType {
   }
   if (SUPPORTED_EXTENSIONS.markdown.includes(ext)) {
     return 'markdown';
+  }
+  if (SUPPORTED_EXTENSIONS.excalidraw.includes(ext)) {
+    return 'excalidraw';
   }
 
   return 'unknown';
@@ -34,6 +38,8 @@ export function getFileIcon(fileType: FileType): string {
       return '📊';
     case 'markdown':
       return '📝';
+    case 'excalidraw':
+      return '✏️';
     default:
       return '📄';
   }

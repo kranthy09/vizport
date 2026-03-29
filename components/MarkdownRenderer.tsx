@@ -11,47 +11,172 @@ interface MarkdownRendererProps {
 
 export function MarkdownRenderer({ content }: MarkdownRendererProps) {
   return (
-    <div className="w-full h-full overflow-auto bg-zinc-950 p-8">
-      <article className="prose prose-invert max-w-none">
+    <div className="w-full h-full overflow-auto animate-fadeIn" style={{ backgroundColor: 'var(--bg-base)' }}>
+      <article className="prose prose-invert mx-auto px-8 py-8 max-w-3xl">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeHighlight]}
           components={{
-            h1: (props: any) => (
-              <h1 className="text-3xl font-bold mt-6 mb-4 text-zinc-100" {...props} />
+            h1: ({ node, ...props }: any) => (
+              <h1
+                className="text-4xl font-bold mt-8 mb-4 scroll-mt-16"
+                style={{ color: 'var(--text-primary)' }}
+                {...props}
+              />
             ),
-            h2: (props: any) => (
-              <h2 className="text-2xl font-bold mt-5 mb-3 text-zinc-100" {...props} />
+            h2: ({ node, ...props }: any) => (
+              <h2
+                className="text-3xl font-bold mt-7 mb-3 scroll-mt-16"
+                style={{ color: 'var(--text-primary)' }}
+                {...props}
+              />
             ),
-            h3: (props: any) => (
-              <h3 className="text-xl font-bold mt-4 mb-2 text-zinc-100" {...props} />
+            h3: ({ node, ...props }: any) => (
+              <h3
+                className="text-2xl font-bold mt-6 mb-2 scroll-mt-16"
+                style={{ color: 'var(--text-primary)' }}
+                {...props}
+              />
             ),
-            p: (props: any) => (
-              <p className="my-3 text-zinc-300 leading-relaxed" {...props} />
+            h4: ({ node, ...props }: any) => (
+              <h4
+                className="text-xl font-bold mt-5 mb-2"
+                style={{ color: 'var(--text-primary)' }}
+                {...props}
+              />
             ),
-            pre: (props: any) => (
-              <pre className="bg-zinc-900 border border-zinc-800 rounded p-4 my-4 overflow-x-auto" {...props} />
+            p: ({ node, ...props }: any) => (
+              <p
+                className="my-4 leading-relaxed"
+                style={{ color: 'var(--text-secondary)' }}
+                {...props}
+              />
             ),
-            code: ({ inline, ...props }: any) =>
-              inline ? (
-                <code className="bg-zinc-900 px-2 py-1 rounded text-sm text-zinc-100" {...props} />
-              ) : (
-                <code className="text-zinc-100" {...props} />
-              ),
-            a: (props: any) => (
-              <a className="text-blue-400 hover:text-blue-300 underline" {...props} />
+            ul: ({ node, ...props }: any) => (
+              <ul className="list-disc list-inside my-4 space-y-2" {...props} />
             ),
-            blockquote: (props: any) => (
-              <blockquote className="border-l-4 border-zinc-700 pl-4 italic text-zinc-400 my-4" {...props} />
+            ol: ({ node, ...props }: any) => (
+              <ol className="list-decimal list-inside my-4 space-y-2" {...props} />
             ),
-            table: (props: any) => (
-              <table className="border-collapse border border-zinc-700 w-full my-4" {...props} />
+            li: ({ node, ...props }: any) => (
+              <li style={{ color: 'var(--text-secondary)' }} {...props} />
             ),
-            th: (props: any) => (
-              <th className="border border-zinc-700 bg-zinc-900 px-4 py-2 text-left" {...props} />
+            pre: ({ node, ...props }: any) => (
+              <pre
+                className="rounded-lg p-4 my-4 overflow-x-auto border transition-colors duration-150"
+                style={{
+                  backgroundColor: 'var(--bg-elevated)',
+                  borderColor: 'var(--border)',
+                }}
+                {...props}
+              />
             ),
-            td: (props: any) => (
-              <td className="border border-zinc-700 px-4 py-2" {...props} />
+            code: ({ node, className, children, ...props }: any) => {
+              const isInline = !className;
+              if (isInline) {
+                return (
+                  <code
+                    className="px-2 py-1 rounded text-sm font-mono transition-colors"
+                    style={{
+                      backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                      color: 'var(--accent-light)',
+                    }}
+                    {...props}
+                  >
+                    {children}
+                  </code>
+                );
+              }
+              return (
+                <code
+                  className={`font-mono text-sm ${className ?? ''}`}
+                  style={{ color: 'var(--text-primary)' }}
+                  {...props}
+                >
+                  {children}
+                </code>
+              );
+            },
+            a: ({ node, ...props }: any) => (
+              <a
+                className="transition-colors duration-150 underline"
+                style={{
+                  color: 'var(--accent-light)',
+                }}
+                onMouseEnter={(e) => {
+                  (e.target as HTMLElement).style.color = 'var(--accent)';
+                }}
+                onMouseLeave={(e) => {
+                  (e.target as HTMLElement).style.color = 'var(--accent-light)';
+                }}
+                {...props}
+              />
+            ),
+            blockquote: ({ node, ...props }: any) => (
+              <blockquote
+                className="border-l-4 pl-4 my-4 italic"
+                style={{
+                  borderColor: 'var(--border)',
+                  color: 'var(--text-muted)',
+                }}
+                {...props}
+              />
+            ),
+            table: ({ node, ...props }: any) => (
+              <div className="overflow-x-auto my-4">
+                <table
+                  className="border-collapse w-full"
+                  style={{
+                    borderColor: 'var(--border)',
+                  }}
+                  {...props}
+                />
+              </div>
+            ),
+            thead: ({ node, ...props }: any) => (
+              <thead
+                style={{
+                  backgroundColor: 'var(--bg-elevated)',
+                  borderColor: 'var(--border)',
+                }}
+                {...props}
+              />
+            ),
+            th: ({ node, ...props }: any) => (
+              <th
+                className="border px-4 py-2 text-left font-semibold"
+                style={{
+                  borderColor: 'var(--border)',
+                  color: 'var(--text-primary)',
+                }}
+                {...props}
+              />
+            ),
+            td: ({ node, ...props }: any) => (
+              <td
+                className="border px-4 py-2"
+                style={{
+                  borderColor: 'var(--border)',
+                  color: 'var(--text-secondary)',
+                }}
+                {...props}
+              />
+            ),
+            hr: ({ node, ...props }: any) => (
+              <hr
+                className="my-6"
+                style={{ borderColor: 'var(--border)' }}
+                {...props}
+              />
+            ),
+            img: ({ node, ...props }: any) => (
+              <img
+                className="rounded-lg my-4 max-w-full glow"
+                style={{
+                  borderColor: 'var(--border)',
+                }}
+                {...props}
+              />
             ),
           }}
         >

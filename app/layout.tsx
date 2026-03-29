@@ -9,7 +9,7 @@ const geist = Geist({
 
 export const metadata: Metadata = {
   title: 'VizPort',
-  description: 'A minimalist viewer for PNG, SVG, Mermaid diagrams, and Markdown',
+  description: 'High-performance diagram & image explorer with smooth pan/zoom',
   viewport: 'width=device-width, initial-scale=1',
 };
 
@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={geist.className}>
-      <body className="bg-zinc-950 text-zinc-100">
+      <body className="antialiased" style={{ backgroundColor: '#08080f', color: '#e2e8f0' }}>
         {children}
       </body>
     </html>

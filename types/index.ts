@@ -1,4 +1,4 @@
-export type FileType = 'image' | 'mermaid' | 'markdown' | 'unknown';
+export type FileType = 'image' | 'mermaid' | 'markdown' | 'excalidraw' | 'unknown';
 
 export interface GitHubFile {
   path: string;           // e.g., "diagrams/flow.mmd"
