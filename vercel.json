@@ -1,0 +1,20 @@
+{
+  "projectName": "vizport",
+  "buildCommand": "npm run build",
+  "installCommand": "npm ci",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "functions": {
+    "api/**/*.ts": {
+      "memory": 3008,
+      "maxDuration": 60
+    }
+  },
+  "redirects": [
+    {
+      "source": "/docs/(.*)",
+      "destination": "https://github.com/kranthy09/vizport/tree/main/docs/$1",
+      "permanent": false
+    }
+  ]
+}
